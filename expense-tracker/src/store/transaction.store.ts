@@ -52,7 +52,6 @@ export const useTransactionStore = create<TRANSACTIONSTORE>((set, get) => ({
 
             get().fetchTransaction()
         } catch (error: any) {
-            console.log(error);
             if (error instanceof AxiosError) {
                 Alert.alert("Error", error.response?.data.message)
             }
@@ -86,7 +85,6 @@ export const useTransactionStore = create<TRANSACTIONSTORE>((set, get) => ({
             if (response.status === 400) throw new Error(response.data.message)
             set({ transactions: response.data.groupedTransactions })
         } catch (error) {
-            console.log(error)
         }
         finally {
             set({ isFetching: false })
@@ -119,7 +117,6 @@ export const useTransactionStore = create<TRANSACTIONSTORE>((set, get) => ({
             // if everything goes right, call the fetch transaction function
             get().fetchTransaction()
         } catch (error: any) {
-            console.log(error);
             if (error instanceof AxiosError) {
                 Alert.alert("Error", error.response?.data.message)
             }
@@ -144,9 +141,9 @@ export const useTransactionStore = create<TRANSACTIONSTORE>((set, get) => ({
             })
             if (response.status === 400) throw new Error(response.data.message)
             // if everything goes right, call the fetch transaction function
+            Alert.alert("Success", response.data.message)
             get().fetchTransaction()
         } catch (error: any) {
-            console.log(error);
             if (error instanceof AxiosError) {
                 Alert.alert("Error", error.response?.data.message)
             }

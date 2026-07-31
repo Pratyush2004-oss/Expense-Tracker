@@ -35,7 +35,7 @@ const HomeScreen = () => {
   const isPositive = summary.balance >= 0;
 
   return (
-    <View className="flex-1 bg-black" style={{ paddingTop: insets.top }}>
+    <View className="flex-1 bg-black">
       {/* Header */}
       <View className="px-5 py-2">
         <Text className="text-white text-2xl font-bold">Home</Text>

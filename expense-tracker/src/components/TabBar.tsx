@@ -162,6 +162,7 @@ export default function TabBar({
               colors={["#22C55E", "#16A34A"]}
               style={{
                 position: "absolute",
+                top: 5,
                 inset: 0,
                 borderRadius: 100
               }}

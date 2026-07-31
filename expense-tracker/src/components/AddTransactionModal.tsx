@@ -169,12 +169,7 @@ const AddTransactionModal: React.FC<AddTransactionModalProps> = ({
       }
       setFormData(createDefaultForm());
       onClose();
-      Alert.alert(
-        "Success",
-        `${isEditing ? "Updated" : "Added"} ${payload.transaction_type}: ₹${payload.amount.toFixed(2)} — ${payload.title}`
-      );
     } catch {
-      Alert.alert("Error", `Failed to ${isEditing ? "update" : "add"} transaction. Please try again.`);
     }
     finally {
       setisLoading(false);

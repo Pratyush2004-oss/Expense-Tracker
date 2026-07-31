@@ -236,33 +236,41 @@ const SignupScreen = () => {
               </View>
 
               {/* Terms & Conditions */}
-              <TouchableOpacity
-                className="flex-row items-start mt-1"
-                onPress={() => setAgreeTerms(!agreeTerms)}
-                activeOpacity={0.7}
-              >
-                <View
-                  className={`w-5 h-5 rounded-md border-2 items-center justify-center mt-0.5 ${
-                    agreeTerms
-                      ? "bg-green-500 border-green-500"
-                      : "border-zinc-600"
-                  }`}
+              <View className="flex-row items-start mt-1">
+                <TouchableOpacity
+                  onPress={() => setAgreeTerms(!agreeTerms)}
+                  activeOpacity={0.7}
+                  hitSlop={{ top: 4, bottom: 4, left: 4, right: 4 }}
                 >
-                  {agreeTerms && (
-                    <Ionicons name="checkmark" size={14} color="black" />
-                  )}
-                </View>
+                  <View
+                    className={`w-5 h-5 rounded-md border-2 items-center justify-center mt-0.5 ${
+                      agreeTerms
+                        ? "bg-green-500 border-green-500"
+                        : "border-zinc-600"
+                    }`}
+                  >
+                    {agreeTerms && (
+                      <Ionicons name="checkmark" size={14} color="black" />
+                    )}
+                  </View>
+                </TouchableOpacity>
                 <Text className="flex-1 ml-3 text-sm text-zinc-400">
                   I agree to the{" "}
-                  <Text className="font-medium text-green-500">
+                  <Text
+                    className="font-medium text-green-500"
+                    onPress={() => router.push("/(legal)/terms")}
+                  >
                     Terms of Service
                   </Text>{" "}
                   and{" "}
-                  <Text className="font-medium text-green-500">
+                  <Text
+                    className="font-medium text-green-500"
+                    onPress={() => router.push("/(legal)/privacy")}
+                  >
                     Privacy Policy
                   </Text>
                 </Text>
-              </TouchableOpacity>
+              </View>
 
               {/* Signup Button */}
               <TouchableOpacity

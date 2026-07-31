@@ -209,6 +209,27 @@ const LoginScreen = () => {
               </Text>
             </TouchableOpacity>
           </View>
+
+          {/* Legal Links */}
+          <View className="flex-row items-center justify-center mt-6 gap-3">
+            <TouchableOpacity
+              onPress={() => router.push("/(legal)/terms")}
+              activeOpacity={0.7}
+            >
+              <Text className="text-xs text-zinc-600 underline">
+                Terms & Conditions
+              </Text>
+            </TouchableOpacity>
+            <Text className="text-xs text-zinc-700">|</Text>
+            <TouchableOpacity
+              onPress={() => router.push("/(legal)/privacy")}
+              activeOpacity={0.7}
+            >
+              <Text className="text-xs text-zinc-600 underline">
+                Privacy Policy
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

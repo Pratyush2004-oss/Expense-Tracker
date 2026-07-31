@@ -1,18 +1,10 @@
-import express from "express"
-import dotenv from "dotenv"
-import cors from "cors"
+import dotenv from "dotenv";
+import app from "./app.js";
 import { intializeDatabase } from "./config/db.js";
+
 dotenv.config();
-const app = express()
-app.use(express.json())
-app.use(cors())
-const PORT = process.env.PORT
 
-import AuthRouter from "./routes/user.route.js";
-import TransactionRouter from "./routes/transaction.route.js";
-
-app.use('/api/auth', AuthRouter);
-app.use('/api/transaction', TransactionRouter);
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
     intializeDatabase();

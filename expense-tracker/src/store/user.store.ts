@@ -69,7 +69,6 @@ export const useUserStore = create<USERSTOREINTERFACE>((set, get) => ({
             Alert.alert("Success", response.data.message || "User created successfully")
 
         } catch (error: any) {
-            console.log(error)
             if (error instanceof AxiosError) {
                 Alert.alert("Error", error.response?.data.message || "Internal Server Error")
             }
@@ -101,11 +100,9 @@ export const useUserStore = create<USERSTOREINTERFACE>((set, get) => ({
 
         } catch (error: any) {
             if (error instanceof AxiosError) {
-                console.log(error.response?.data)
                 Alert.alert("error", error.response?.data.message)
             }
             else {
-                console.log(error)
                 Alert.alert("error", error.message)
 
             }
@@ -132,7 +129,6 @@ export const useUserStore = create<USERSTOREINTERFACE>((set, get) => ({
             set({ user })
 
         } catch (error: any) {
-            console.log(error);
             // Token might be expired — clear stored auth
             await storage.removeMany([STORAGE_KEYS.TOKEN, STORAGE_KEYS.USER]);
             set({ user: null, token: null });

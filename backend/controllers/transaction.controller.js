@@ -156,6 +156,7 @@ export const updateTransaction = async (req, res) => {
         UPDATE transactions 
         SET title = ${title}, transaction_type = ${transaction_type}, payment_method = ${payment_method}, amount = ${amount}, category = ${category}, transaction_date = ${new Date(transaction_date)}
         WHERE id = ${transaction_id} AND user_id = ${user[0].id}
+        RETURNING *
         `
         if (updatedTransaction.length == 0) {
             return res.status(400).json({ success: false, message: "Transaction does not exist" })
@@ -190,6 +191,7 @@ export const deleteTransaction = async (req, res) => {
         // delete transaction
         const deletedTransaction = await sql`
         DELETE FROM transactions WHERE id = ${transaction_id} AND user_id = ${user[0].id}
+        RETURNING *
         `
         if (deletedTransaction.length == 0) {
             return res.status(400).json({ success: false, message: "Transaction does not exist" })

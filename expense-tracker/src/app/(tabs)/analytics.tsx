@@ -33,6 +33,7 @@ const AnalyticsScreen = () => {
   const isFetching = useTransactionStore((s) => s.isFetching);
   const fetchTransaction = useTransactionStore((s) => s.fetchTransaction);
   const transactions = useTransactionStore((s) => s.transactions);
+  const year_month = useTransactionStore((s) => s.year_month);
   const summary = useSummaryStore((s) => s.summary);
 
   const [refreshing, setRefreshing] = React.useState(false);
@@ -48,24 +49,46 @@ const AnalyticsScreen = () => {
     label: cat.category,
   }));
 
-  const barData = transactions
-    .map((day) => {
+  const barData = React.useMemo(() => {
+    const [yearStr, monthStr] = year_month.split("-");
+    const year = parseInt(yearStr);
+    const month = parseInt(monthStr);
+
+    // Get the last day of the month
+    const lastDay = new Date(year, month, 0).getDate();
+
+    // Build a lookup map: date-string (YYYY-MM-DD) -> total expense
+    const expenseByDate: Record<string, number> = {};
+    for (const day of transactions) {
       const totalExpense = day.transactions
         .filter((tx) => tx.transaction_type === "Expense")
         .reduce((sum, tx) => sum + Number(tx.amount), 0);
-      const date = new Date(day.date);
-      return {
-        label: date.toLocaleDateString("en-US", { weekday: "short" }),
-        value: totalExpense,
+      if (totalExpense > 0) {
+        // Backend returns dates like "Sat Jul 15 2026 …" — normalize to YYYY-MM-DD
+        const d = new Date(day.date);
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+        expenseByDate[key] = totalExpense;
+      }
+    }
+
+    // Build array for every single day from 1st to lastDay
+    const pad = (n: number) => String(n).padStart(2, "0");
+    const data = [];
+    for (let day = 1; day <= lastDay; day++) {
+      const dateStr = `${year}-${pad(month)}-${pad(day)}`;
+      data.push({
+        label: String(day),
+        value: expenseByDate[dateStr] || 0,
         color: "#EF4444",
-      };
-    })
-    .filter((d) => d.value > 0);
+      });
+    }
+    return data;
+  }, [transactions, year_month]);
 
   const isPositive = summary.balance >= 0;
 
   return (
-    <View className="flex-1 bg-black" style={{ paddingTop: insets.top }}>
+    <View className="flex-1 bg-black">
       <View className="px-5 py-2">
         <Text className="text-white text-2xl font-bold">Analytics</Text>
       </View>

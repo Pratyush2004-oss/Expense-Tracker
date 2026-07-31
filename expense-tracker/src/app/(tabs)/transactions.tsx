@@ -175,7 +175,7 @@ const TransactionsScreen = () => {
     filters.paymentFilter;
 
   return (
-    <View className="flex-1 bg-black" style={{ paddingTop: insets.top }}>
+    <View className="flex-1 bg-black">
       <AddTransactionModal
         visible={editModalVisible}
         onClose={() => {
